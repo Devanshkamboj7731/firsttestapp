@@ -1,17 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCheck - Counterfeit Verification</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #f0f4f8; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+        }
+        .container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
+            max-width: 450px; 
+            width: 100%; 
+            text-align: center; 
+        }
+        h1 { color: #2c3e50; margin-bottom: 5px;}
+        p.subtitle { color: #7f8c8d; margin-bottom: 25px; font-size: 14px;}
+        input[type="text"] { 
+            width: 85%; 
+            padding: 12px; 
+            margin-bottom: 20px; 
+            border: 2px solid #bdc3c7; 
+            border-radius: 6px; 
+            font-size: 16px;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        button { 
+            background-color: #3498db; 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 16px;
+            cursor: pointer; 
+            font-weight: bold;
+            transition: background 0.3s; 
+        }
+        button:hover { background-color: #2980b9; }
+        #result { 
+            margin-top: 25px; 
+            text-align: left; 
+            display: none; 
+            padding: 20px; 
+            border-radius: 8px; 
+        }
+        .authentic { background-color: #e8f8f5; color: #117864; border: 1px solid #a3e4d7; }
+        .counterfeit { background-color: #fdedec; color: #922b21; border: 1px solid #f5b7b1; }
+        .details-list { margin-top: 10px; line-height: 1.6; }
+    </style>
 </head>
-
 <body>
-  <main>
-    <h1>First Web App in Azure </h1>
-  </main>
-</body>
+    <div class="container">
+        <h1>MediCheck</h1>
+        <p class="subtitle">Enter the batch number to verify pharmaceutical authenticity and view known side effects.</p>
+        
+        <!-- Search Input -->
+        <input type="text" id="batchNumber" placeholder="e.g., MED-8892">
+        <br>
+        <button onclick="verifyMedicine()">Verify Medicine</button>
 
+        <!-- Results display area -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function verifyMedicine() {
+            const batchInput = document.getElementById('batchNumber').value.trim().toUpperCase();
+            const resultDiv = document.getElementById('result');
+            
+            if(!batchInput) {
+                alert('Please enter a batch number.');
+                return;
+            }
+
+            // Show a loading state
+            resultDiv.style.display = 'block';
+            resultDiv.className = '';
+            resultDiv.innerHTML = '<p style="text-align: center;">Querying pharmaceutical database...</p>';
+
+            // Simulate a brief delay like a real API call
+            setTimeout(() => {
+                // We use MED-8892 as our test "Authentic" batch
+                if(batchInput === 'MED-8892') {
+                    resultDiv.className = 'authentic';
+                    resultDiv.innerHTML = `
+                        <h3 style="margin-top: 0;">✅ Authentic Verification</h3>
+                        <div class="details-list">
+                            <strong>Medication:</strong> Amoxicillin 500mg<br>
+                            <strong>Manufacturer:</strong> Global Health Pharma<br>
+                            <strong>Expiry Date:</strong> 12/2028<br><br>
+                            <strong>Reported Side Effects:</strong> Nausea, skin rash, or minor stomach pain. Discontinue use if allergic reaction occurs.
+                        </div>
+                    `;
+                } else {
+                    // Any other input registers as a counterfeit/invalid batch
+                    resultDiv.className = 'counterfeit';
+                    resultDiv.innerHTML = `
+                        <h3 style="margin-top: 0;">❌ Warning: Unverified Batch</h3>
+                        <div class="details-list">
+                            The batch number <strong>${batchInput}</strong> could not be found in the secure registry. 
+                            <br><br>
+                            <strong>Action Required:</strong> Do not consume this product. It may be counterfeit. Please report this to your local pharmacy.
+                        </div>
+                    `;
+                }
+            }, 1200); // 1.2 second delay
+        }
+    </script>
+</body>
 </html>
