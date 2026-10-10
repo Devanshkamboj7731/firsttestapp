@@ -3,122 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediCheck - Counterfeit Verification</title>
+    <title>Employee Portal Login</title>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f0f4f8; 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        .container { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 12px; 
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
-            max-width: 450px; 
-            width: 100%; 
-            text-align: center; 
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 360px;
         }
-        h1 { color: #2c3e50; margin-bottom: 5px;}
-        p.subtitle { color: #7f8c8d; margin-bottom: 25px; font-size: 14px;}
-        input[type="text"] { 
-            width: 85%; 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border: 2px solid #bdc3c7; 
-            border-radius: 6px; 
-            font-size: 16px;
-        }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-        button { 
-            background-color: #3498db; 
-            color: white; 
-            padding: 12px 24px; 
-            border: none; 
-            border-radius: 6px; 
-            font-size: 16px;
-            cursor: pointer; 
+        .company-logo {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
             font-weight: bold;
-            transition: background 0.3s; 
+            color: #2c3e50;
         }
-        button:hover { background-color: #2980b9; }
-        #result { 
-            margin-top: 25px; 
-            text-align: left; 
-            display: none; 
-            padding: 20px; 
-            border-radius: 8px; 
+        .form-group {
+            margin-bottom: 20px;
         }
-        .authentic { background-color: #e8f8f5; color: #117864; border: 1px solid #a3e4d7; }
-        .counterfeit { background-color: #fdedec; color: #922b21; border: 1px solid #f5b7b1; }
-        .details-list { margin-top: 10px; line-height: 1.6; }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #495057;
+            font-size: 14px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .login-btn:hover {
+            background-color: #0056b3;
+        }
+        .footer-links {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+        }
+        .footer-links a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>MediCheck</h1>
-        <p class="subtitle">Enter the batch number to verify pharmaceutical authenticity and view known side effects.</p>
-        
-        <!-- Search Input -->
-        <input type="text" id="batchNumber" placeholder="e.g., MED-8892">
-        <br>
-        <button onclick="verifyMedicine()">Verify Medicine</button>
 
-        <!-- Results display area -->
-        <div id="result"></div>
+    <div class="login-container">
+        <div class="company-logo">
+            <!-- You can replace this text with an <img src="..."> tag -->
+            Company Portal
+        </div>
+        
+        <form onsubmit="event.preventDefault(); alert('Login submission triggered!');">
+            <div class="form-group">
+                <label for="employee-email">Work Email</label>
+                <input type="email" id="employee-email" placeholder="name@company.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+
+        <div class="footer-links">
+            <a href="#">Forgot Password?</a>
+            <a href="#">IT Support</a>
+        </div>
     </div>
 
-    <script>
-        function verifyMedicine() {
-            const batchInput = document.getElementById('batchNumber').value.trim().toUpperCase();
-            const resultDiv = document.getElementById('result');
-            
-            if(!batchInput) {
-                alert('Please enter a batch number.');
-                return;
-            }
-
-            // Show a loading state
-            resultDiv.style.display = 'block';
-            resultDiv.className = '';
-            resultDiv.innerHTML = '<p style="text-align: center;">Querying pharmaceutical database...</p>';
-
-            // Simulate a brief delay like a real API call
-            setTimeout(() => {
-                // We use MED-8892 as our test "Authentic" batch
-                if(batchInput === 'MED-8892') {
-                    resultDiv.className = 'authentic';
-                    resultDiv.innerHTML = `
-                        <h3 style="margin-top: 0;">✅ Authentic Verification</h3>
-                        <div class="details-list">
-                            <strong>Medication:</strong> Amoxicillin 500mg<br>
-                            <strong>Manufacturer:</strong> Global Health Pharma<br>
-                            <strong>Expiry Date:</strong> 12/2028<br><br>
-                            <strong>Reported Side Effects:</strong> Nausea, skin rash, or minor stomach pain. Discontinue use if allergic reaction occurs.
-                        </div>
-                    `;
-                } else {
-                    // Any other input registers as a counterfeit/invalid batch
-                    resultDiv.className = 'counterfeit';
-                    resultDiv.innerHTML = `
-                        <h3 style="margin-top: 0;">❌ Warning: Unverified Batch</h3>
-                        <div class="details-list">
-                            The batch number <strong>${batchInput}</strong> could not be found in the secure registry. 
-                            <br><br>
-                            <strong>Action Required:</strong> Do not consume this product. It may be counterfeit. Please report this to your local pharmacy.
-                        </div>
-                    `;
-                }
-            }, 1200); // 1.2 second delay
-        }
-    </script>
 </body>
 </html>
